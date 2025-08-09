@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import siteContent from "../content/siteContent";
 import { ThemeContext } from '../context/ThemeContext';
@@ -9,6 +9,17 @@ function Navbar() {
     const { brand, links } = siteContent.navbar;
     const { theme, toggleTheme } = useContext(ThemeContext);
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const prefetch = (link) => {
         if (link.component && link.component.preload) {
@@ -23,7 +34,11 @@ function Navbar() {
     };
 
     return (
-        <nav className="relative backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            isScrolled || isMobileMenuOpen
+                ? 'bg-white dark:bg-gray-900 border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg' 
+                : 'bg-transparent border-b border-transparent'
+        }`}>
             <div className="container mx-auto px-4 lg:px-8">
                 <div className="flex items-center justify-between h-16 lg:h-20">
                     {/* Brand */}
@@ -90,13 +105,13 @@ function Navbar() {
                 </div>
 
                 {/* Mobile Menu */}
-                <div className={`lg:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-                    <div className="py-4 space-y-2 border-t border-gray-200/50 dark:border-gray-700/50">
+                <div className={`lg:hidden absolute left-0 right-0 top-full transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden z-50`}>
+                    <div className="py-4 space-y-2 border-t border-gray-200/50 dark:border-gray-700/50 bg-white dark:bg-gray-900 shadow-lg">
                         {links.map((link, index) => (
                             <Link
                                 key={index}
                                 to={link.path}
-                                className="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 rounded-lg font-medium transition-all duration-300"
+                                className="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg font-medium transition-all duration-300 mx-2"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 {link.name}
@@ -104,6 +119,15 @@ function Navbar() {
                         ))}
                     </div>
                 </div>
+
+                {/* Mobile Menu Backdrop */}
+                {isMobileMenuOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/20 z-40 lg:hidden"
+                        onClick={() => setMobileMenuOpen(false)}
+                        style={{ top: '64px' }} // Start below navbar
+                    />
+                )}
             </div>
         </nav>
     );

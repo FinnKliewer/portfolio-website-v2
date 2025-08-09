@@ -15,13 +15,15 @@ function App() {
                 <Router>
                     <div className="bg-base-200 min-h-screen">
                         <Navbar />
-                        <Routes>
+                        <div className="pt-16 lg:pt-20">
+                            <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/professional-history" element={<ProfessionalHistory />} />
                             <Route path="/github-projects" element={<GitHubProjects />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="*" element={<Home />} />
-                        </Routes>
+                            </Routes>
+                        </div>
                         <Footer />
                     </div>
                 </Router>

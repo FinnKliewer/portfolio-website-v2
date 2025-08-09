@@ -59,7 +59,7 @@ const Home = () => {
                 {/* Floating Elements */}
                 <FloatingElements />
                 
-                <div className="backdrop-blur-sm min-h-screen w-full relative z-10">
+                <div className="backdrop-blur-sm min-h-screen w-full relative z-10 pt-16 lg:pt-0">
                     <div className="container mx-auto px-2 sm:px-4 py-4 lg:py-8">
                         {/* Hero Section */}
                         <HeroSection isVisible={isVisible} />

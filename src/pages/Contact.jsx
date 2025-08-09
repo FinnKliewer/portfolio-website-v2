@@ -18,8 +18,8 @@ function Contact() {
                 <meta property="og:title" content="Contact Me - Finn Kliewer" />
             </Helmet>
 
-            <div className="min-h-screen">
-                <div className="container mx-auto px-4 lg:px-8 py-8 lg:py-16 max-w-6xl">
+            <div className="min-h-screen pt-16 lg:pt-20">
+                <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-8 max-w-6xl">
                     {/* Hero Section */}
                     <ContactHero />
                     

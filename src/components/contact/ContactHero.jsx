@@ -9,7 +9,7 @@ const ContactHero = () => {
 
     return (
         <div className={`transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="text-center lg:text-left mb-12 lg:mb-16">
+            <div className="text-center lg:text-left mb-6 lg:mb-8">
                 <div className="relative">
                     {/* Main Heading */}
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 leading-tight">
