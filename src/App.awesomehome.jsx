@@ -4,6 +4,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ProfessionalHistory from "./pages/ProfessionalHistory";
+import GitHubProjects from "./pages/GitHubProjects";
 import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
 
@@ -17,6 +18,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/professional-history" element={<ProfessionalHistory />} />
+                            <Route path="/github-projects" element={<GitHubProjects />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="*" element={<Home />} />
                         </Routes>
