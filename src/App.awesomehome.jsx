@@ -4,6 +4,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ProfessionalHistory from "./pages/ProfessionalHistory";
+import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/professional-history" element={<ProfessionalHistory />} />
+                            <Route path="/contact" element={<Contact />} />
                             <Route path="*" element={<Home />} />
                         </Routes>
                         <Footer />
