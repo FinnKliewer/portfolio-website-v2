@@ -6,7 +6,7 @@ import siteContent from "../../content/siteContent";
 const HeroSection = ({ isVisible }) => {
     return (
         <div className={`transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 min-h-[80vh] px-4 pt-8 md:pt-16 lg:pt-0">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 min-h-[80vh] lg:min-h-[70vh] px-4 pt-8 md:pt-16 lg:pt-0">
                 {/* Profile Image with Enhanced Styling */}
                 <div className="flex-shrink-0 relative group order-1 lg:order-none">
                     <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
