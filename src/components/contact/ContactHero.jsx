@@ -14,21 +14,21 @@ const ContactHero = () => {
                     {/* Main Heading */}
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 leading-tight">
                         <span className="block text-gray-800 dark:text-white">
-                            Get In{' '}
+                            Talk about the work{' '}
                         </span>
-                        <span className="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent drop-shadow-lg dark:drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]">
-                            Touch
+                        <span className="block text-gray-800 dark:text-white">
+                            that compounds.
                         </span>
                     </h1>
 
                     {/* Decorative Line */}
                     <div className="flex justify-center lg:justify-start mb-8">
-                        <div className="w-32 lg:w-48 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full shadow-lg dark:shadow-purple-400/50"></div>
+                        <div className="w-32 lg:w-48 h-px bg-indigo-500 dark:bg-indigo-400"></div>
                     </div>
 
                     {/* Subtitle */}
                     <p className="text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                        Let's connect and discuss opportunities, collaborations, or just have a great conversation about technology and innovation.
+                        For platform engineering, software systems, and ambitious technical problems, send a note.
                     </p>
                 </div>
             </div>

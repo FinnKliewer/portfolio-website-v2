@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import siteContent from "../content/siteContent";
 import { ReactComponent as EmailIcon } from "../assets/icons/email.svg";
 import { ReactComponent as PhoneIcon } from "../assets/icons/phone-call.svg";
-import { FaGithub, FaLinkedin, FaHeart } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 function Footer() {
     return (
         <footer className="relative overflow-hidden">
             {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black"></div>
+            <div className="absolute inset-0 bg-gray-950"></div>
             
             {/* Decorative Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -24,11 +24,11 @@ function Footer() {
                     {/* Brand Section */}
                     <div className="lg:col-span-2">
                         <div className="mb-6">
-                            <h2 className="text-3xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                                <h2 className="text-3xl font-semibold text-white mb-4 tracking-[-0.03em]">
                                 {siteContent.navbar.brand}
                             </h2>
                             <p className="text-gray-300 leading-relaxed max-w-md">
-                                Passionate about transforming complex data into actionable insights through innovative technology solutions and creative problem-solving.
+                                Platform Engineer at Citadel building the software systems and engineering leverage behind high-stakes work.
                             </p>
                         </div>
                         
@@ -57,7 +57,7 @@ function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-lg font-bold text-white mb-4">Quick Links</h3>
+                        <h3 className="text-lg font-bold text-white mb-4">Explore</h3>
                         <ul className="space-y-3">
                             {siteContent.navbar.links.map((link) => (
                                 <li key={link.name}>
@@ -112,7 +112,7 @@ function Footer() {
 
                 {/* Decorative Line */}
                 <div className="flex justify-center mt-8">
-                    <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"></div>
+                    <div className="w-24 h-px bg-indigo-400"></div>
                 </div>
             </div>
         </footer>

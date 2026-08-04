@@ -1,93 +1,36 @@
 import React from 'react';
-import { SiPython, SiTensorflow, SiScikitlearn, SiTableau, SiReact, SiSqlite } from "react-icons/si";
+import siteContent from "../../content/siteContent";
 
 const SkillsShowcase = () => {
-    const skills = [
-        { 
-            icon: <SiPython />, 
-            name: "Python", 
-            color: "from-yellow-400 to-blue-500"
-        },
-        { 
-            icon: <SiTensorflow />, 
-            name: "TensorFlow", 
-            color: "from-orange-400 to-red-500"
-        },
-        { 
-            icon: <SiScikitlearn />, 
-            name: "Scikit-learn", 
-            color: "from-blue-400 to-indigo-500"
-        },
-        { 
-            icon: <SiTableau />, 
-            name: "Tableau", 
-            color: "from-blue-500 to-purple-500"
-        },
-        { 
-            icon: <SiReact />, 
-            name: "ReactJS", 
-            color: "from-cyan-400 to-blue-500"
-        },
-        { 
-            icon: <SiSqlite />, 
-            name: "SQL", 
-            color: "from-green-400 to-blue-500"
-        }
-    ];
+    const { home, education } = siteContent;
 
     return (
-        <div className="relative">
-            {/* Background Glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 dark:from-purple-500/10 via-pink-500/20 dark:via-pink-500/10 to-indigo-500/20 dark:to-indigo-500/10 rounded-3xl blur-xl"></div>
-            
-            {/* Main Container */}
-            <div className="relative backdrop-blur-xl bg-white/60 dark:bg-black/10 border border-gray-300/30 dark:border-white/20 rounded-2xl lg:rounded-3xl p-6 lg:p-10 shadow-2xl mx-4 lg:mx-0">
-                {/* Header */}
-                <div className="text-center mb-8 lg:mb-12">
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-4">
-                        <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                            Technical Arsenal
-                        </span>
-                    </h3>
+        <section aria-labelledby="focus-heading" className="border-y border-gray-200 dark:border-gray-800 py-10 lg:py-14">
+            <div className="grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-20">
+                <div>
+                    <h2 id="focus-heading" className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-gray-950 dark:text-white">
+                        The work I do
+                    </h2>
+                    <p className="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-400 max-w-sm">
+                        I stay broad in domain and focused in leverage: build the technical foundation, improve the operating system, and make the next decision easier.
+                    </p>
+                    <div className="mt-8 space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                        {education.map((item) => (
+                            <p key={item}>{item}</p>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Skills Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-8 max-w-4xl mx-auto">
-                    {skills.map((skill, index) => (
-                        <div
-                            key={index}
-                            className="group relative"
-                            style={{ animationDelay: `${index * 100}ms` }}
-                        >
-                            {/* Card Content */}
-                            <div className="relative bg-white/95 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl lg:rounded-2xl p-4 lg:p-8 border border-gray-300/40 dark:border-white/40 hover:border-gray-400/60 dark:hover:border-white/60 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 shadow-lg hover:shadow-2xl">
-                                {/* Icon Container */}
-                                <div className="flex justify-center mb-3 lg:mb-6">
-                                    <div className={`p-3 lg:p-5 rounded-xl lg:rounded-2xl bg-gradient-to-br ${skill.color} text-white text-2xl lg:text-4xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110`}>
-                                        {skill.icon}
-                                    </div>
-                                </div>
-                                
-                                {/* Skill Info */}
-                                <div className="text-center">
-                                    <h4 className="text-base lg:text-xl font-bold text-gray-800 dark:text-white">
-                                        {skill.name}
-                                    </h4>
-                                </div>
-
-                                {/* Subtle Hover Glow */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl lg:rounded-2xl pointer-events-none"></div>
-                            </div>
+                <div className="grid sm:grid-cols-3 gap-8">
+                    {home.focusAreas.map((area) => (
+                        <div key={area.title} className="focus-area">
+                            <h3 className="text-lg font-semibold text-gray-950 dark:text-white">{area.title}</h3>
+                            <p className="mt-3 text-sm leading-relaxed text-gray-600 dark:text-gray-400">{area.description}</p>
                         </div>
                     ))}
                 </div>
-
-                {/* Bottom Accent */}
-                <div className="flex justify-center mt-8">
-                    <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"></div>
-                </div>
             </div>
-        </div>
+        </section>
     );
 };
 

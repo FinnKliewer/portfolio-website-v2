@@ -1,52 +1,42 @@
 import React from 'react';
 
-const ArrowDownIcon = () => (
-    <svg
-        className="w-4 h-4 text-gray-500"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-    >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-    </svg>
-);
+const steps = [
+    {
+        title: 'Text samples',
+        description: 'Raw blog posts and personal writing',
+    },
+    {
+        title: 'BGE transformer',
+        description: 'Creates 1,024-dimensional sentence embeddings',
+    },
+    {
+        title: 'XGBoost classifier',
+        description: 'Identifies dementia-related text patterns',
+    },
+    {
+        title: 'Prediction',
+        description: 'Returns the final classification',
+    },
+];
 
 const ClassificationFlow = () => {
     return (
-        <div className="flex flex-col items-center space-y-4">
-            <div className="card bg-base-200 shadow-md w-full max-w-sm py-2 px-6 text-center">
-                <h3 className="text-lg font-bold">Input Data</h3>
-                <p className="text-xs light:text-gray-600 dark:text-gray-400">Raw blog posts or text samples</p>
-            </div>
-
-            <ArrowDownIcon />
-
-            <div className="card bg-base-200 shadow-md w-full max-w-sm py-2 px-6 text-center">
-                <h3 className="text-lg font-bold">BGE Hugging Face Transformer</h3>
-                <p className="text-xs light:text-gray-600 dark:text-gray-400">
-                    Generates 1024-d sentence embeddings efficiently
-                </p>
-            </div>
-
-            <ArrowDownIcon />
-
-            <div className="card bg-base-200 shadow-md w-full max-w-sm py-2 px-6 text-center">
-                <h3 className="text-lg font-bold">XGBoost Classifier</h3>
-                <p className="text-xs light:text-gray-600 dark:text-gray-400">
-                    Classifies texts as "likely dementia" or "not likely dementia"
-                </p>
-            </div>
-
-            <ArrowDownIcon />
-
-            <div className="card bg-base-200 shadow-md w-full max-w-sm py-2 px-6 text-center">
-                <h3 className="text-lg font-bold">Classification Output</h3>
-                <p className="text-xs light:text-gray-600 dark:text-gray-400">
-                    Final prediction: Likely Dementia or Not
-                </p>
-            </div>
-        </div>
+        <ol className="mt-5 space-y-3">
+            {steps.map((step, index) => (
+                <li key={step.title} className="relative flex gap-4 pb-3 last:pb-0">
+                    {index < steps.length - 1 && (
+                        <span className="absolute left-[0.875rem] top-8 h-[calc(100%-1rem)] w-px bg-gray-200 dark:bg-gray-700" aria-hidden="true" />
+                    )}
+                    <span className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-950 text-xs font-semibold text-white dark:bg-white dark:text-gray-950">
+                        {index + 1}
+                    </span>
+                    <div className="min-w-0 pt-0.5">
+                        <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100">{step.title}</h4>
+                        <p className="mt-1 text-sm leading-relaxed text-gray-500 dark:text-gray-400">{step.description}</p>
+                    </div>
+                </li>
+            ))}
+        </ol>
     );
 };
 

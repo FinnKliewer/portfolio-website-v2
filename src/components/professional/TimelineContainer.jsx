@@ -3,7 +3,10 @@ import { motion } from 'framer-motion';
 import TimelineCard from './TimelineCard';
 
 const TimelineContainer = ({ jobs }) => {
-    const sortedJobs = jobs.sort((a, b) => {
+    const sortedJobs = [...jobs].sort((a, b) => {
+        if (a.order !== undefined || b.order !== undefined) {
+            return (a.order ?? 99) - (b.order ?? 99);
+        }
         const [aMonth, aYear] = a.startDate.split("/").map(Number);
         const [bMonth, bYear] = b.startDate.split("/").map(Number);
         return bYear - aYear || bMonth - aMonth;

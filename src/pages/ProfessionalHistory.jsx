@@ -9,10 +9,10 @@ function ProfessionalHistory() {
     return (
         <>
             <Helmet>
-                <title>Professional History - Finn Kliewer</title>
+                <title>Experience · Finn Kliewer</title>
                 <meta
-                    name="Professional History - Finn Kliewer"
-                    content="Building the future, one line of code at a time."
+                    name="description"
+                    content="Finn Kliewer's experience across platform engineering, software engineering, technology research, and business."
                 />
             </Helmet>
 

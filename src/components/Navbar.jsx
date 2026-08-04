@@ -44,7 +44,7 @@ function Navbar() {
                     {/* Brand */}
                     <div className="flex-shrink-0">
                         <Link to="/" className="group">
-                            <span className="text-xl lg:text-2xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+                            <span className="text-xl lg:text-2xl font-semibold tracking-[-0.03em] text-gray-950 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
                                 {brand}
                             </span>
                         </Link>
