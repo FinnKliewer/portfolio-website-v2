@@ -1,25 +1,27 @@
 // src/content/jobs.js
 import paycomLogo from "../assets/paycom.png";
+import citadelLogo from "../assets/citadel.svg";
 import sevenTrainLogo from "../assets/seventrain.jpg";
 import tigerAALogo from "../assets/tigeraa.jpg";
 import RJWBLogo from "../assets/rwjbarnabashealth.jpg";
 import tedsenLogo from "../assets/tedsen.png";
-import placeholderLogo from "../assets/placeholder.png";
 
 const jobs = [
     {
         title: "Platform Engineer",
         company: "Citadel",
-        duration: "Current",
+        duration: "Aug 2026 - Present",
+        startDate: "08/2026",
+        isCurrent: true,
         description:
             "Building the platforms, tooling, and systems that help a high-performance engineering organization ship with speed and reliability.",
-        logo: placeholderLogo,
+        logo: citadelLogo,
         order: 0,
     },
     {
         title: "Software Engineer",
         company: "Paycom",
-        duration: "2 years",
+        duration: "Aug 2024 - Jul 2026",
         startDate: "08/2024",
         endDate: "07/2026",
         description:
@@ -30,7 +32,7 @@ const jobs = [
     {
         title: "Venture Developer",
         company: "Seventrain Ventures",
-        duration: "2023 - 2025",
+        duration: "May 2023 - Dec 2025",
         startDate: "05/2023",
         endDate: "12/2025",
         description:
@@ -41,7 +43,7 @@ const jobs = [
     {
         title: "Summer Analyst",
         company: "Tiger Advisory",
-        duration: "Summer 2024",
+        duration: "May 2024 - Jul 2024",
         startDate: "05/2024",
         endDate: "07/2024",
         description:
@@ -52,7 +54,7 @@ const jobs = [
     {
         title: "Research Assistant",
         company: "RWJBarnabas Health",
-        duration: "2024",
+        duration: "Feb 2024 - Jul 2024",
         startDate: "02/2024",
         endDate: "07/2024",
         description:
@@ -63,7 +65,7 @@ const jobs = [
     {
         title: "Summer Intern",
         company: "Adolf Tedsen GmbH",
-        duration: "Summer 2022",
+        duration: "Jun 2022 - Jul 2022",
         startDate: "06/2022",
         endDate: "07/2022",
         description:

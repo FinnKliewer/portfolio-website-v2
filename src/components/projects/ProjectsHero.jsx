@@ -1,33 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import LandingScrollCue from '../LandingScrollCue';
 
 const ProjectsHero = () => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
+    const reduceMotion = useReducedMotion();
+    const transition = {
+        duration: reduceMotion ? 0 : 0.78,
+        ease: [0.16, 1, 0.3, 1],
+    };
 
     return (
-        <div className={`transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="text-center lg:text-left mb-6 lg:mb-8">
-                <div className="relative">
-                    {/* Main Heading */}
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.05em] mb-4 leading-tight text-gray-950 dark:text-white">
-                        Selected work.
-                    </h1>
+        <header className="projects-hero">
+            <motion.h1
+                id="selected-work-title"
+                initial={reduceMotion ? false : { y: 28, opacity: 0, filter: 'blur(7px)' }}
+                animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+                transition={{ ...transition, delay: reduceMotion ? 0 : 0.08 }}
+            >
+                Selected work.
+            </motion.h1>
 
-                    {/* Decorative Line */}
-                    <div className="flex justify-center lg:justify-start mb-4">
-                        <div className="w-24 lg:w-32 h-px bg-indigo-500 dark:bg-indigo-400"></div>
+            <motion.aside
+                className="projects-hero__support landing-hero-support"
+                aria-label="Featured work overview"
+                initial={reduceMotion ? false : { y: 22, scale: 0.985, opacity: 0, filter: 'blur(6px)' }}
+                animate={{ y: 0, scale: 1, opacity: 1, filter: 'blur(0px)' }}
+                transition={{ ...transition, delay: reduceMotion ? 0 : 0.28 }}
+            >
+                <p>
+                    The work here is selected for the engineering decisions behind it,
+                    not for surface area.
+                </p>
+
+                <div className="landing-hero-support__details">
+                    <div>
+                        <span>Focus</span>
+                        <strong>Architecture and implementation</strong>
                     </div>
-
-                    {/* Subtitle */}
-                    <p className="text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                        A set of software projects and technical experiments that show how I think, build, and investigate.
-                    </p>
+                    <div>
+                        <span>Standard</span>
+                        <strong>Decisions backed by evidence</strong>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </motion.aside>
+
+            <motion.span
+                className="projects-hero__rule"
+                aria-hidden="true"
+                initial={reduceMotion ? false : { scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: reduceMotion ? 0 : 1.08, delay: reduceMotion ? 0 : 0.55, ease: [0.16, 1, 0.3, 1] }}
+            />
+
+            <LandingScrollCue targetId="selected-work-content" label="Scroll to selected project case studies" />
+        </header>
     );
 };
 

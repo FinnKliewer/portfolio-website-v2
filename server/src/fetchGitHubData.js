@@ -12,7 +12,7 @@ const repoUrls = [
     'https://github.com/FinnKliewer/react-pictionary-game',
     'https://github.com/FinnKliewer/portfolio-website-v2',
     'https://github.com/ArcticDevelopment/ArcticTools',
-    'https://github.com/FinnKliewer/ShoppingList',
+    // 'https://github.com/FinnKliewer/ShoppingList',
 ];
 
 function parseRepoUrl(url) {

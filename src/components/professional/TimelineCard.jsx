@@ -1,84 +1,84 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import placeholderLogo from '../../assets/placeholder.png';
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
-const TimelineCard = ({ job, index, isEven }) => {
-    const contentClass = isEven
-        ? "timeline-start mb-10 md:text-end"
-        : "timeline-end mb-10 md:text-start";
+const TimelineCard = ({ job, index, isActive, onActive }) => {
+    const entryRef = useRef(null);
+    const [logoFailed, setLogoFailed] = useState(false);
+    const reduceMotion = useReducedMotion();
+    const isInView = useInView(entryRef, {
+        margin: "-34% 0px -46% 0px",
+        amount: 0.12,
+    });
+    const hasEntered = useInView(entryRef, {
+        once: true,
+        margin: "0px 0px -12% 0px",
+        amount: 0.14,
+    });
+    const monogram = job.company
+        .split(/\s+/)
+        .map((word) => word[0])
+        .join("")
+        .slice(0, 2);
 
-    const cardVariants = {
-        hidden: { 
-            opacity: 0, 
-            scale: 0.9,
-            x: isEven ? -50 : 50
-        },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            x: 0,
-            transition: {
-                duration: 0.6,
-                delay: index * 0.2,
-                ease: "easeOut"
-            }
-        }
-    };
+    useEffect(() => {
+        if (isInView) onActive(index);
+    }, [index, isInView, onActive]);
 
     return (
         <motion.li
-            className={!isEven ? "timeline-inverted" : ""}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={cardVariants}
+            ref={entryRef}
+            className={`experience-entry ${isActive ? "is-active" : ""}`}
+            animate={reduceMotion ? undefined : {
+                y: hasEntered ? (isActive ? 0 : 8) : 34,
+                opacity: hasEntered ? (isActive ? 1 : 0.62) : 0,
+                filter: hasEntered ? "blur(0px)" : "blur(5px)",
+            }}
+            transition={{ duration: hasEntered ? 0.52 : 0.68, ease: [0.16, 1, 0.3, 1] }}
+            aria-current={isActive ? "step" : undefined}
         >
-            {/* Timeline Icon */}
-            <div className="timeline-middle mx-4">
-                <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
-                    <div className="relative p-2 bg-white dark:bg-gray-800 border-2 border-indigo-500/50 rounded-xl shadow-lg">
-                        <img
-                            src={job.logo || placeholderLogo}
-                            alt={`${job.company} logo`}
-                            className="w-12 h-12 object-contain rounded-lg"
-                        />
-                    </div>
-                </div>
+            <span className="experience-entry__node" aria-hidden="true" />
+
+            <div className="experience-entry__meta">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <time>{job.duration}</time>
             </div>
 
-            {/* Content Card */}
-            <div className={contentClass}>
-                <div className="relative">
-                    {/* Main Card */}
-                    <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
-                        {/* Date Badge */}
-                        <div className="inline-block mb-4">
-                            <span className="px-3 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-medium rounded-lg">
-                                {job.duration}
-                            </span>
-                        </div>
+            <div className="experience-entry__body">
+                <div className="experience-entry__company">
+                    <span className="experience-entry__logo">
+                        {job.logo && !logoFailed
+                            ? <img src={job.logo} alt="" loading="lazy" onError={() => setLogoFailed(true)} />
+                            : <span className="experience-entry__monogram" aria-hidden="true">{monogram}</span>}
+                    </span>
+                    <span>{job.company}</span>
+                </div>
 
-                        {/* Job Details */}
-                        <div className="mb-4">
-                            <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">
-                                {job.title}
-                            </h3>
-                            <h4 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400">
-                                {job.company}
-                            </h4>
-                        </div>
+                <h2>{job.title}</h2>
+                <p>{job.description}</p>
 
-                        {/* Description */}
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {job.description}
-                        </p>
-                    </div>
+                <div className="experience-entry__divider" aria-hidden="true">
+                    <motion.span
+                        animate={reduceMotion ? undefined : { scaleX: isActive ? 1 : 0 }}
+                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    />
                 </div>
             </div>
-            <hr className="border-gray-200 dark:border-gray-700" />
         </motion.li>
     );
+};
+
+TimelineCard.propTypes = {
+    job: PropTypes.shape({
+        company: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        duration: PropTypes.string.isRequired,
+        logo: PropTypes.string,
+        title: PropTypes.string.isRequired,
+    }).isRequired,
+    index: PropTypes.number.isRequired,
+    isActive: PropTypes.bool.isRequired,
+    onActive: PropTypes.func.isRequired,
 };
 
 export default TimelineCard;

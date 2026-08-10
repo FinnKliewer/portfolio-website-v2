@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { FaArrowRight } from 'react-icons/fa';
 
 const ContactForm = () => {
+    const reduceMotion = useReducedMotion();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -9,48 +11,67 @@ const ContactForm = () => {
         message: "",
     });
 
-    const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState({});
+    const [submissionStatus, setSubmissionStatus] = useState('idle');
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: value,
         });
+
+        if (errors[name]) {
+            setErrors((currentErrors) => ({ ...currentErrors, [name]: undefined }));
+        }
+
+        if (submissionStatus !== 'idle') {
+            setSubmissionStatus('idle');
+        }
     };
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.name) newErrors.name = "Name is required";
-        if (!formData.email) {
-            newErrors.email = "Email is required";
+        if (!formData.name.trim()) newErrors.name = "Enter your name.";
+        if (!formData.email.trim()) {
+            newErrors.email = "Enter your email address.";
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = "Email is invalid";
+            newErrors.email = "Enter a valid email address.";
         }
-        if (!formData.subject) newErrors.subject = "Subject is required";
-        if (!formData.message) newErrors.message = "Message is required";
+        if (!formData.subject.trim()) newErrors.subject = "Add a subject.";
+        if (!formData.message.trim()) newErrors.message = "Write a message.";
         return newErrors;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
+
         if (Object.keys(validationErrors).length === 0) {
+            setSubmissionStatus('submitting');
+
             try {
-                const webhook_payload = {
+                const webhookUrl = process.env.REACT_APP_WEBHOOK_LINK; // eslint-disable-line no-undef
+
+                if (!webhookUrl) {
+                    throw new Error('Contact webhook is not configured.');
+                }
+
+                const webhookPayload = {
                     content: `**New Contact Form Submission**\n**Name:** ${formData.name}\n**Email:** ${formData.email}\n**Subject:** ${formData.subject}\n**Message:** ${formData.message}`
                 };
 
-                const response = await fetch(process.env.REACT_APP_WEBHOOK_LINK, {
+                const response = await fetch(webhookUrl, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(webhook_payload),
+                    body: JSON.stringify(webhookPayload),
                 });
+
                 if (response.ok) {
-                    console.log("Form Data:", formData);
-                    setSubmitted(true);
+                    setSubmissionStatus('success');
                     setFormData({
                         name: "",
                         email: "",
@@ -59,138 +80,139 @@ const ContactForm = () => {
                     });
                     setErrors({});
                 } else {
-                    console.error("Failed to submit form");
+                    setSubmissionStatus('error');
                 }
             } catch (error) {
                 console.error("Error submitting form", error);
+                setSubmissionStatus('error');
             }
         } else {
             setErrors(validationErrors);
+            setSubmissionStatus('idle');
         }
     };
 
-    const formVariants = {
-        hidden: { opacity: 0, x: 30 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut"
-            }
-        }
-    };
+    const fieldError = (fieldName) => errors[fieldName];
 
     return (
-        <motion.div 
-            className="lg:w-1/2 p-8 lg:p-12 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm"
-            variants={formVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+        <motion.section
+            className="contact-form-panel"
+            initial={reduceMotion ? false : { opacity: 0, x: 20, filter: 'blur(5px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: reduceMotion ? 0 : 0.72, ease: [0.16, 1, 0.3, 1] }}
         >
-            <h2 className="mb-8 text-2xl lg:text-3xl font-bold text-center lg:text-left text-gray-800 dark:text-white">
-                Send a Message
-            </h2>
-            
-            {submitted && (
-                <motion.div 
-                    className="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-lg text-green-700 dark:text-green-300 text-center"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3 }}
+            <div className="contact-form-panel__intro">
+                <h2>Send a message.</h2>
+                <p>Share the context, constraints, and what you’re trying to make happen.</p>
+            </div>
+
+            {submissionStatus === 'success' && (
+                <motion.p
+                    className="form-status form-status--success"
+                    role="status"
+                    initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.35 }}
                 >
-                    Thank you for your message! I'll get back to you soon.
-                </motion.div>
+                    Message sent. Thanks for reaching out—I’ll get back to you soon.
+                </motion.p>
             )}
-            
-            <form onSubmit={handleSubmit} noValidate className="space-y-6">
-                <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                        Name
-                    </label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-3 border rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 ${
-                            errors.name ? "border-red-500" : "border-gray-300 dark:border-gray-600"
-                        }`}
-                        placeholder="Your Name"
-                    />
-                    {errors.name && (
-                        <span className="text-red-500 text-sm mt-1 block">{errors.name}</span>
-                    )}
+
+            {submissionStatus === 'error' && (
+                <motion.p
+                    className="form-status form-status--error"
+                    role="alert"
+                    initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.35 }}
+                >
+                    The message could not be sent. Try again, or use the email link beside the form.
+                </motion.p>
+            )}
+
+            <form onSubmit={handleSubmit} noValidate>
+                <div className="form-grid">
+                    <div className={`form-field ${fieldError('name') ? 'has-error' : ''}`}>
+                        <label htmlFor="contact-name">Name</label>
+                        <input
+                            id="contact-name"
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Your name"
+                            autoComplete="name"
+                            aria-invalid={Boolean(fieldError('name'))}
+                            aria-describedby={fieldError('name') ? 'contact-name-error' : undefined}
+                            required
+                        />
+                        {fieldError('name') && <small id="contact-name-error">{fieldError('name')}</small>}
+                    </div>
+
+                    <div className={`form-field ${fieldError('email') ? 'has-error' : ''}`}>
+                        <label htmlFor="contact-email">Email</label>
+                        <input
+                            id="contact-email"
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="you@example.com"
+                            autoComplete="email"
+                            aria-invalid={Boolean(fieldError('email'))}
+                            aria-describedby={fieldError('email') ? 'contact-email-error' : undefined}
+                            required
+                        />
+                        {fieldError('email') && <small id="contact-email-error">{fieldError('email')}</small>}
+                    </div>
                 </div>
 
-                <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                        Email
-                    </label>
+                <div className={`form-field ${fieldError('subject') ? 'has-error' : ''}`}>
+                    <label htmlFor="contact-subject">Subject</label>
                     <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-3 border rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 ${
-                            errors.email ? "border-red-500" : "border-gray-300 dark:border-gray-600"
-                        }`}
-                        placeholder="you@example.com"
-                    />
-                    {errors.email && (
-                        <span className="text-red-500 text-sm mt-1 block">{errors.email}</span>
-                    )}
-                </div>
-
-                <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                        Subject
-                    </label>
-                    <input
+                        id="contact-subject"
                         type="text"
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 border rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 ${
-                            errors.subject ? "border-red-500" : "border-gray-300 dark:border-gray-600"
-                        }`}
-                        placeholder="Subject"
+                        placeholder="What would you like to discuss?"
+                        aria-invalid={Boolean(fieldError('subject'))}
+                        aria-describedby={fieldError('subject') ? 'contact-subject-error' : undefined}
+                        required
                     />
-                    {errors.subject && (
-                        <span className="text-red-500 text-sm mt-1 block">{errors.subject}</span>
-                    )}
+                    {fieldError('subject') && <small id="contact-subject-error">{fieldError('subject')}</small>}
                 </div>
 
-                <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                        Message
-                    </label>
+                <div className={`form-field ${fieldError('message') ? 'has-error' : ''}`}>
+                    <label htmlFor="contact-message">Message</label>
                     <textarea
+                        id="contact-message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        rows={5}
-                        className={`w-full px-4 py-3 border rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none ${
-                            errors.message ? "border-red-500" : "border-gray-300 dark:border-gray-600"
-                        }`}
-                        placeholder="Your message..."
-                    ></textarea>
-                    {errors.message && (
-                        <span className="text-red-500 text-sm mt-1 block">{errors.message}</span>
-                    )}
+                        rows={6}
+                        placeholder="Include the useful details."
+                        aria-invalid={Boolean(fieldError('message'))}
+                        aria-describedby={fieldError('message') ? 'contact-message-error' : undefined}
+                        required
+                    />
+                    {fieldError('message') && <small id="contact-message-error">{fieldError('message')}</small>}
                 </div>
 
-                <div className="text-center lg:text-left">
+                <div className="contact-form__actions">
                     <button
                         type="submit"
-                        className="w-full lg:w-auto px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="site-action site-action--primary contact-submit"
+                        disabled={submissionStatus === 'submitting'}
                     >
-                        Send Message
+                        {submissionStatus === 'submitting' ? 'Sending…' : 'Send message'}
+                        <FaArrowRight aria-hidden="true" />
                     </button>
+                    <span>All fields are required.</span>
                 </div>
             </form>
-        </motion.div>
+        </motion.section>
     );
 };
 

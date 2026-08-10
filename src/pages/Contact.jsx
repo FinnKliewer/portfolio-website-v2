@@ -10,26 +10,24 @@ function Contact() {
     return (
         <>
             <Helmet>
-                <title>Contact Me - Finn Kliewer</title>
+                <title>Contact · Finn Kliewer</title>
                 <meta
-                    name="Contact Me - Finn Kliewer"
+                    name="description"
                     content="Get in touch with me through my contact form or reach out via email, phone, LinkedIn, or GitHub."
                 />
-                <meta property="og:title" content="Contact Me - Finn Kliewer" />
+                <meta property="og:title" content="Contact · Finn Kliewer" />
             </Helmet>
 
-            <div className="min-h-screen pt-16 lg:pt-20">
-                <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-8 max-w-6xl">
-                    {/* Hero Section */}
+            <main className="contact-page">
+                <div className="site-page contact-page__inner">
                     <ContactHero />
-                    
-                    {/* Contact Section */}
-                    <div className="flex flex-col lg:flex-row w-full max-w-5xl mx-auto shadow-2xl rounded-2xl overflow-hidden border border-gray-200/50 dark:border-gray-700/50">
+
+                    <section id="contact-content" className="contact-artifact" aria-label="Contact options and message form">
                         <ContactInfo />
                         <ContactForm />
-                    </div>
+                    </section>
                 </div>
-            </div>
+            </main>
         </>
     );
 }

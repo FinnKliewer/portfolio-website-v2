@@ -1,34 +1,45 @@
-import React from 'react';
+import React from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import siteContent from "../../content/siteContent";
 
 const SkillsShowcase = () => {
     const { home, education } = siteContent;
+    const reduceMotion = useReducedMotion();
 
     return (
-        <section aria-labelledby="focus-heading" className="border-y border-gray-200 dark:border-gray-800 py-10 lg:py-14">
-            <div className="grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-20">
-                <div>
-                    <h2 id="focus-heading" className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-gray-950 dark:text-white">
-                        The work I do
-                    </h2>
-                    <p className="mt-4 text-base leading-relaxed text-gray-600 dark:text-gray-400 max-w-sm">
-                        I stay broad in domain and focused in leverage: build the technical foundation, improve the operating system, and make the next decision easier.
-                    </p>
-                    <div className="mt-8 space-y-2 text-sm text-gray-500 dark:text-gray-400">
-                        {education.map((item) => (
-                            <p key={item}>{item}</p>
-                        ))}
-                    </div>
-                </div>
+        <section className="leverage-map" aria-labelledby="focus-heading">
+            <div className="leverage-map__intro">
+                <h2 id="focus-heading">The layer beneath the outcome.</h2>
+                <p>I stay broad in domain and precise in execution: build the foundation, improve the operating system, and make the next decision easier.</p>
+            </div>
 
-                <div className="grid sm:grid-cols-3 gap-8">
-                    {home.focusAreas.map((area) => (
-                        <div key={area.title} className="focus-area">
-                            <h3 className="text-lg font-semibold text-gray-950 dark:text-white">{area.title}</h3>
-                            <p className="mt-3 text-sm leading-relaxed text-gray-600 dark:text-gray-400">{area.description}</p>
-                        </div>
+            <motion.div
+                className="leverage-map__system"
+                initial={reduceMotion ? false : { y: 16, opacity: 0.84 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.18 }}
+                transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+                <svg className="leverage-map__track" viewBox="0 0 900 120" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M10 60h210l45-35h210l45 70h190l50-35h130" />
+                </svg>
+                <div className="leverage-map__nodes">
+                    {home.focusAreas.map((area, index) => (
+                        <article
+                            key={area.title}
+                            className="leverage-node"
+                        >
+                            <span className="leverage-node__signal" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                            <h3>{area.title}</h3>
+                            <p>{area.description}</p>
+                        </article>
                     ))}
                 </div>
+            </motion.div>
+
+            <div className="education-rail">
+                <p>Technical depth, broader judgment.</p>
+                <div>{education.map((item) => <span key={item}>{item}</span>)}</div>
             </div>
         </section>
     );

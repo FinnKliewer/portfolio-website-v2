@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
 import { Helmet } from "react-helmet";
@@ -33,10 +33,15 @@ CarouselArrow.propTypes = {
 const carouselSettings = {
     dots: true,
     infinite: true,
+    autoplay: true,
+    autoplaySpeed: 6500,
     speed: 550,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
+    pauseOnHover: false,
+    pauseOnFocus: false,
+    pauseOnDotsHover: true,
     prevArrow: <CarouselArrow direction="previous" />,
     nextArrow: <CarouselArrow direction="next" />,
     accessibility: true,
@@ -55,14 +60,17 @@ const carouselSettings = {
 function GitHubProjects() {
     const [repoProjects, setRepoProjects] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [hasLoadError, setHasLoadError] = useState(false);
 
-    useEffect(() => {
+    const loadProjects = useCallback(() => {
         const configuredApiUrl = process.env.REACT_APP_API_URL; // eslint-disable-line no-undef
         const baseUrl = configuredApiUrl
             ? configuredApiUrl.replace(/\/$/, "")
             : "";
-        
+
         setIsLoading(true);
+        setHasLoadError(false);
+
         fetch(`${baseUrl}/api/repos`)
             .then((response) => {
                 if (!response.ok) {
@@ -71,14 +79,23 @@ function GitHubProjects() {
                 return response.json();
             })
             .then((data) => {
+                if (!Array.isArray(data)) {
+                    throw new Error('Repository response was not an array.');
+                }
+
                 setRepoProjects(data);
                 setIsLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching repo data:', error);
+                setHasLoadError(true);
                 setIsLoading(false);
             });
     }, []);
+
+    useEffect(() => {
+        loadProjects();
+    }, [loadProjects]);
 
     return (
         <React.Fragment>
@@ -90,13 +107,14 @@ function GitHubProjects() {
                 />
             </Helmet>
 
-            <div className="min-h-screen pt-16 lg:pt-20">
-                {/* Hero Section */}
-                <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-8 max-w-6xl">
+            <main className="projects-page">
+                <div className="projects-page__hero-shell">
                     <ProjectsHero />
                 </div>
 
-                <section className="px-3 sm:px-6 lg:px-8 pb-20 lg:pb-28" aria-label="Showcase projects">
+                <div id="selected-work-content" className="landing-scroll-target" aria-hidden="true" />
+
+                <section className="projects-showcase px-3 sm:px-6 lg:px-8 pb-20 lg:pb-28" aria-label="Showcase projects">
                     <div className="mx-auto max-w-7xl">
                         <Slider {...carouselSettings} className="selected-work-carousel">
                             <div className="spotlight-slide">
@@ -109,9 +127,13 @@ function GitHubProjects() {
                     </div>
                 </section>
 
-                {/* All Projects Section */}
-                <AllProjectsSection projects={repoProjects} isLoading={isLoading} />
-            </div>
+                <AllProjectsSection
+                    projects={repoProjects}
+                    isLoading={isLoading}
+                    hasError={hasLoadError}
+                    onRetry={loadProjects}
+                />
+            </main>
         </React.Fragment>
     );
 }

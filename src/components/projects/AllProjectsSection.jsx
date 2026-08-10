@@ -1,84 +1,112 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
+import { motion, useReducedMotion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import LoadingState from './LoadingState';
 
-const AllProjectsSection = ({ projects, isLoading }) => {
+const AllProjectsSection = ({ projects, isLoading, hasError, onRetry }) => {
+    const reduceMotion = useReducedMotion();
     const sectionVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1
-            }
-        }
+                staggerChildren: reduceMotion ? 0 : 0.065,
+            },
+        },
     };
+    const entrance = reduceMotion ? false : { y: 24, opacity: 0, filter: 'blur(6px)' };
+    const settled = { y: 0, opacity: 1, filter: 'blur(0px)' };
 
     return (
-        <div className="min-h-screen">
-            <div className="container mx-auto px-4 lg:px-8 py-8 lg:py-16 max-w-6xl">
-                {/* Section Header */}
-                <motion.div 
-                    className="text-center lg:text-left mb-12 lg:mb-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
+        <section className="repository-index" aria-labelledby="repository-index-title">
+            <div className="repository-index__inner">
+                <motion.header
+                    className="repository-index__header"
+                    initial={entrance}
+                    whileInView={settled}
+                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.72, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 text-gray-800 dark:text-white">
-                        All Projects
-                    </h2>
-                    <div className="flex justify-center lg:justify-start mb-6">
-                        <div className="w-24 lg:w-32 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"></div>
-                    </div>
-                    <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto lg:mx-0">
-                        A comprehensive collection of my open-source contributions and personal projects.
+                    <h2 id="repository-index-title">All projects.</h2>
+                    <p>
+                        A broader index of public repositories, including web systems,
+                        graphics, tooling, and earlier experiments.
                     </p>
-                </motion.div>
 
-                {/* Loading State */}
+                    {!isLoading && !hasError && (
+                        <span className="repository-index__status">
+                            {projects.length} public {projects.length === 1 ? 'repository' : 'repositories'}
+                        </span>
+                    )}
+                </motion.header>
+
                 {isLoading && <LoadingState />}
 
-                {/* Projects Grid */}
-                {!isLoading && projects.length > 0 && (
-                    <motion.div 
-                        className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr"
+                {!isLoading && !hasError && projects.length > 0 && (
+                    <motion.div
+                        className="repository-grid"
+                        role="list"
+                        aria-label="Public repositories"
                         variants={sectionVariants}
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: true, amount: 0.1 }}
+                        viewport={{ once: true, amount: 0.08 }}
                     >
                         {projects.map((project, index) => (
-                            <ProjectCard 
-                                key={index} 
-                                project={project} 
+                            <ProjectCard
+                                key={project.url || project.name}
+                                project={project}
                                 index={index}
                             />
                         ))}
                     </motion.div>
                 )}
 
-                {/* Empty State */}
-                {!isLoading && projects.length === 0 && (
-                    <motion.div 
-                        className="text-center py-16"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
+                {!isLoading && hasError && (
+                    <motion.div
+                        className="repository-empty repository-empty--error"
+                        role="alert"
+                        initial={entrance}
+                        animate={settled}
+                        transition={{ duration: reduceMotion ? 0 : 0.58, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center">
-                            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                            </svg>
+                        <span aria-hidden="true" />
+                        <div>
+                            <h3>GitHub data is unavailable.</h3>
+                            <p>The selected case studies above are still available. Try the repository index again when you’re ready.</p>
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">No Projects Found</h3>
-                        <p className="text-gray-600 dark:text-gray-400">Unable to fetch projects from GitHub at this time.</p>
+                        <button type="button" className="site-action site-action--quiet" onClick={onRetry}>
+                            Try again
+                        </button>
+                    </motion.div>
+                )}
+
+                {!isLoading && !hasError && projects.length === 0 && (
+                    <motion.div
+                        className="repository-empty"
+                        initial={entrance}
+                        whileInView={settled}
+                        viewport={{ once: true }}
+                        transition={{ duration: reduceMotion ? 0 : 0.58, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                        <span aria-hidden="true" />
+                        <div>
+                            <h3>No public repositories found.</h3>
+                            <p>The featured case studies above remain available.</p>
+                        </div>
                     </motion.div>
                 )}
             </div>
-        </div>
+        </section>
     );
+};
+
+AllProjectsSection.propTypes = {
+    projects: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    hasError: PropTypes.bool.isRequired,
+    onRetry: PropTypes.func.isRequired,
 };
 
 export default AllProjectsSection;
