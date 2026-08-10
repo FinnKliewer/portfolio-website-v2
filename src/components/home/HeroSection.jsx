@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { FaArrowRight, FaDownload, FaGithub, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import headshotImage from "../../assets/headshot.webp";
@@ -13,7 +13,7 @@ const HeroSection = () => {
     return (
         <section className="home-hero" aria-labelledby="home-title">
             <div className="home-hero__copy">
-                <motion.h1
+                <m.h1
                     id="home-title"
                     className="home-hero__title"
                     initial={reduceMotion ? false : { y: 26, opacity: 0, filter: "blur(7px)" }}
@@ -29,9 +29,9 @@ const HeroSection = () => {
                             <span>{line}</span>
                         </span>
                     ))}
-                </motion.h1>
+                </m.h1>
 
-                <motion.div
+                <m.div
                     className="home-hero__narrative"
                     initial={reduceMotion ? false : { y: 16, opacity: 0, filter: "blur(4px)" }}
                     animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
@@ -49,10 +49,10 @@ const HeroSection = () => {
                             See selected work <FaArrowRight aria-hidden="true" />
                         </Link>
                     </div>
-                </motion.div>
+                </m.div>
             </div>
 
-            <motion.aside
+            <m.aside
                 className="identity-module"
                 initial={reduceMotion ? false : { y: 20, scale: 0.985, opacity: 0, filter: "blur(5px)" }}
                 animate={{ y: 0, scale: 1, opacity: 1, filter: "blur(0px)" }}
@@ -63,7 +63,16 @@ const HeroSection = () => {
                     <span /><i /><i /><b />
                 </div>
                 <div className="identity-module__image-wrap">
-                    <img src={headshotImage} alt="Finn Kliewer" className="identity-module__image" loading="eager" />
+                    <img
+                        src={headshotImage}
+                        alt="Finn Kliewer"
+                        className="identity-module__image"
+                        width="867"
+                        height="867"
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                    />
                     <div className="identity-module__scan" aria-hidden="true" />
                 </div>
                 <div className="identity-module__footer">
@@ -76,10 +85,10 @@ const HeroSection = () => {
                         <a href={siteContent.gitHubLink} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><FaGithub /></a>
                     </div>
                 </div>
-            </motion.aside>
+            </m.aside>
 
         </section>
     );
 };
 
-export default HeroSection;
+export default React.memo(HeroSection);

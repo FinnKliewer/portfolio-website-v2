@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 
 const LoadingState = () => {
     const skeletonCards = Array.from({ length: 6 }, (_, i) => i);
@@ -10,7 +10,7 @@ const LoadingState = () => {
             <span className="sr-only">Loading public repositories.</span>
             <div className="repository-grid repository-grid--loading" aria-hidden="true">
                 {skeletonCards.map((index) => (
-                    <motion.div
+                    <m.div
                         key={index}
                         className="repository-card repository-card--loading"
                         initial={reduceMotion ? false : { opacity: 0, y: 14 }}
@@ -31,7 +31,7 @@ const LoadingState = () => {
                             <span className="skeleton-line skeleton-line--meta" />
                             <span className="skeleton-line skeleton-line--action" />
                         </div>
-                    </motion.div>
+                    </m.div>
                 ))}
             </div>
         </div>

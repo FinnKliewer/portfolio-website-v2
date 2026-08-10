@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 import contactInfo from '../../content/contactInfo';
 
@@ -28,7 +28,7 @@ const ContactInfo = () => {
     };
 
     return (
-        <motion.aside
+        <m.aside
             className="contact-channels"
             initial={reduceMotion ? false : { opacity: 0, x: -20, filter: 'blur(5px)' }}
             whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
@@ -40,7 +40,7 @@ const ContactInfo = () => {
                 <p>Email, phone, LinkedIn, and GitHub—choose the channel that fits the conversation.</p>
             </div>
 
-            <motion.nav
+            <m.nav
                 className="contact-channels__list"
                 aria-label="Direct contact channels"
                 variants={containerVariants}
@@ -49,7 +49,7 @@ const ContactInfo = () => {
                 viewport={{ once: true, amount: 0.2 }}
             >
                 {contactInfo.map((contact) => (
-                    <motion.a
+                    <m.a
                         key={contact.id}
                         href={contact.href}
                         target={contact.label === 'LinkedIn' || contact.label === 'GitHub' ? '_blank' : undefined}
@@ -67,10 +67,10 @@ const ContactInfo = () => {
                             <strong>{contact.text}</strong>
                         </span>
                         <FaArrowRight aria-hidden="true" />
-                    </motion.a>
+                    </m.a>
                 ))}
-            </motion.nav>
-        </motion.aside>
+            </m.nav>
+        </m.aside>
     );
 };
 

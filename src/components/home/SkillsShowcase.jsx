@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import siteContent from "../../content/siteContent";
 
 const SkillsShowcase = () => {
@@ -13,7 +13,7 @@ const SkillsShowcase = () => {
                 <p>I stay broad in domain and precise in execution: build the foundation, improve the operating system, and make the next decision easier.</p>
             </div>
 
-            <motion.div
+            <m.div
                 className="leverage-map__system"
                 initial={reduceMotion ? false : { y: 16, opacity: 0.84 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -35,7 +35,7 @@ const SkillsShowcase = () => {
                         </article>
                     ))}
                 </div>
-            </motion.div>
+            </m.div>
 
             <div className="education-rail">
                 <p>Technical depth, broader judgment.</p>
@@ -45,4 +45,4 @@ const SkillsShowcase = () => {
     );
 };
 
-export default SkillsShowcase;
+export default React.memo(SkillsShowcase);

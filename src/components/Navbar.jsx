@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import siteContent from "../content/siteContent";
 import { ThemeContext } from "../context/ThemeContext";
 import { ReactComponent as DarkThemeIcon } from "../assets/icons/dark-theme.svg";
 import { ReactComponent as LightThemeIcon } from "../assets/icons/light-theme.svg";
+import { preloadRoute } from "../routes";
 
 function RouteMark() {
     return (
@@ -22,14 +23,30 @@ function Navbar() {
     const { theme, toggleTheme } = useContext(ThemeContext);
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const scrollFrame = useRef(null);
     const location = useLocation();
     const reduceMotion = useReducedMotion();
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 24);
-        handleScroll();
+        const updateScrolledState = () => {
+            scrollFrame.current = null;
+            const nextIsScrolled = window.scrollY > 24;
+            setIsScrolled((currentIsScrolled) => currentIsScrolled === nextIsScrolled
+                ? currentIsScrolled
+                : nextIsScrolled);
+        };
+        const handleScroll = () => {
+            if (scrollFrame.current === null) {
+                scrollFrame.current = window.requestAnimationFrame(updateScrolledState);
+            }
+        };
+
+        updateScrolledState();
         window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (scrollFrame.current !== null) window.cancelAnimationFrame(scrollFrame.current);
+        };
     }, []);
 
     useEffect(() => {
@@ -43,7 +60,9 @@ function Navbar() {
         };
     }, [isMobileMenuOpen]);
 
-    const prefetch = (link) => link.component?.preload?.().catch(() => undefined);
+    const prefetch = useCallback((path) => {
+        preloadRoute(path);
+    }, []);
 
     return (
         <nav className={`site-nav ${isScrolled || isMobileMenuOpen ? "site-nav--active" : ""}`} aria-label="Primary navigation">
@@ -59,7 +78,9 @@ function Navbar() {
                             key={link.path}
                             to={link.path}
                             className={({ isActive }) => `site-nav__link ${isActive ? "is-active" : ""}`}
-                            onMouseEnter={() => prefetch(link)}
+                            onPointerEnter={() => prefetch(link.path)}
+                            onFocus={() => prefetch(link.path)}
+                            onTouchStart={() => prefetch(link.path)}
                         >
                             <span>{link.name}</span>
                         </NavLink>
@@ -75,13 +96,13 @@ function Navbar() {
                         aria-pressed={theme === "dark"}
                     >
                         <span className="theme-control__track" aria-hidden="true">
-                            <motion.span
+                            <m.span
                                 className="theme-control__thumb"
                                 animate={{ x: theme === "dark" ? 22 : 0 }}
                                 transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] }}
                             >
                                 {theme === "dark" ? <DarkThemeIcon /> : <LightThemeIcon />}
-                            </motion.span>
+                            </m.span>
                         </span>
                     </button>
 
@@ -100,7 +121,7 @@ function Navbar() {
 
             <AnimatePresence>
                 {isMobileMenuOpen && (
-                    <motion.div
+                    <m.div
                         className="mobile-nav"
                         initial={reduceMotion ? false : { clipPath: "inset(0 0 100% 0)" }}
                         animate={{ clipPath: "inset(0 0 0% 0)" }}
@@ -110,14 +131,20 @@ function Navbar() {
                         <div className="mobile-nav__route" aria-hidden="true"><RouteMark /></div>
                         <div className="mobile-nav__links">
                             {links.map((link, index) => (
-                                <NavLink key={link.path} to={link.path} className="mobile-nav__link">
+                                <NavLink
+                                    key={link.path}
+                                    to={link.path}
+                                    className="mobile-nav__link"
+                                    onFocus={() => prefetch(link.path)}
+                                    onTouchStart={() => prefetch(link.path)}
+                                >
                                     <span>{String(index + 1).padStart(2, "0")}</span>
                                     {link.name}
                                 </NavLink>
                             ))}
                         </div>
                         <p className="mobile-nav__note">Platform engineering · software systems · technical leverage</p>
-                    </motion.div>
+                    </m.div>
                 )}
             </AnimatePresence>
         </nav>

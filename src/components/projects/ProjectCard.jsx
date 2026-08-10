@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 import { ReactComponent as GitStar } from '../../assets/icons/git-star.svg';
 import { ReactComponent as GitFork } from '../../assets/icons/git-fork.svg';
@@ -35,7 +35,7 @@ const ProjectCard = ({ project, index }) => {
     };
 
     return (
-        <motion.article
+        <m.article
             variants={cardVariants}
             className="repository-card"
             role="listitem"
@@ -75,7 +75,7 @@ const ProjectCard = ({ project, index }) => {
                     <FaArrowUpRightFromSquare aria-hidden="true" />
                 </a>
             </footer>
-        </motion.article>
+        </m.article>
     );
 };
 
@@ -91,4 +91,4 @@ ProjectCard.propTypes = {
     index: PropTypes.number.isRequired,
 };
 
-export default ProjectCard;
+export default React.memo(ProjectCard);

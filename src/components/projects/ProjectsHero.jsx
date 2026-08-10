@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import LandingScrollCue from '../LandingScrollCue';
 
 const ProjectsHero = () => {
@@ -11,16 +11,16 @@ const ProjectsHero = () => {
 
     return (
         <header className="projects-hero">
-            <motion.h1
+            <m.h1
                 id="selected-work-title"
                 initial={reduceMotion ? false : { y: 28, opacity: 0, filter: 'blur(7px)' }}
                 animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
                 transition={{ ...transition, delay: reduceMotion ? 0 : 0.08 }}
             >
                 Selected work.
-            </motion.h1>
+            </m.h1>
 
-            <motion.aside
+            <m.aside
                 className="projects-hero__support landing-hero-support"
                 aria-label="Featured work overview"
                 initial={reduceMotion ? false : { y: 22, scale: 0.985, opacity: 0, filter: 'blur(6px)' }}
@@ -42,9 +42,9 @@ const ProjectsHero = () => {
                         <strong>Decisions backed by evidence</strong>
                     </div>
                 </div>
-            </motion.aside>
+            </m.aside>
 
-            <motion.span
+            <m.span
                 className="projects-hero__rule"
                 aria-hidden="true"
                 initial={reduceMotion ? false : { scaleX: 0 }}

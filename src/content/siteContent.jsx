@@ -1,6 +1,3 @@
-// src/content/siteContent.js
-import {lazyWithPreload} from "../utils/lazyWithPreload";
-
 const siteContent = {
     name: "Finn Kliewer",
     gitHubLink: "https://github.com/OX-S",
@@ -39,22 +36,18 @@ const siteContent = {
             {
                 name: "Home",
                 path: "/",
-                component:  lazyWithPreload(() => import(/* webpackPrefetch: true */ '../pages/Home')),
             },
             {
                 name: "Experience",
                 path: "/professional-history",
-                component:  lazyWithPreload(() => import(/* webpackPrefetch: true */ '../pages/ProfessionalHistory')),
             },
             {
                 name: "Selected Work",
                 path: "/github-projects",
-                component:  lazyWithPreload(() => import(/* webpackPrefetch: true */ '../pages/GitHubProjects')),
             },
             {
                 name: "Contact",
                 path: "/contact",
-                component:  lazyWithPreload(() => import(/* webpackPrefetch: true */ '../pages/Contact')),
             },
         ],
     },

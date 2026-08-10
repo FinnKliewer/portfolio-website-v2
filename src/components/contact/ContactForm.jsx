@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 
 const ContactForm = () => {
@@ -95,7 +95,7 @@ const ContactForm = () => {
     const fieldError = (fieldName) => errors[fieldName];
 
     return (
-        <motion.section
+        <m.section
             className="contact-form-panel"
             initial={reduceMotion ? false : { opacity: 0, x: 20, filter: 'blur(5px)' }}
             whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
@@ -108,7 +108,7 @@ const ContactForm = () => {
             </div>
 
             {submissionStatus === 'success' && (
-                <motion.p
+                <m.p
                     className="form-status form-status--success"
                     role="status"
                     initial={reduceMotion ? false : { opacity: 0, y: -8 }}
@@ -116,11 +116,11 @@ const ContactForm = () => {
                     transition={{ duration: reduceMotion ? 0 : 0.35 }}
                 >
                     Message sent. Thanks for reaching out—I’ll get back to you soon.
-                </motion.p>
+                </m.p>
             )}
 
             {submissionStatus === 'error' && (
-                <motion.p
+                <m.p
                     className="form-status form-status--error"
                     role="alert"
                     initial={reduceMotion ? false : { opacity: 0, y: -8 }}
@@ -128,7 +128,7 @@ const ContactForm = () => {
                     transition={{ duration: reduceMotion ? 0 : 0.35 }}
                 >
                     The message could not be sent. Try again, or use the email link beside the form.
-                </motion.p>
+                </m.p>
             )}
 
             <form onSubmit={handleSubmit} noValidate>
@@ -212,7 +212,7 @@ const ContactForm = () => {
                     <span>All fields are required.</span>
                 </div>
             </form>
-        </motion.section>
+        </m.section>
     );
 };
 

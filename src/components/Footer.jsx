@@ -4,6 +4,7 @@ import siteContent from "../content/siteContent";
 import { ReactComponent as EmailIcon } from "../assets/icons/email.svg";
 import { ReactComponent as PhoneIcon } from "../assets/icons/phone-call.svg";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { preloadRoute } from "../routes";
 
 function Footer() {
     return (
@@ -64,6 +65,9 @@ function Footer() {
                                     <Link
                                         to={link.path}
                                         className="text-gray-300 hover:text-indigo-400 transition-colors duration-300 flex items-center group"
+                                        onPointerEnter={() => preloadRoute(link.path)}
+                                        onFocus={() => preloadRoute(link.path)}
+                                        onTouchStart={() => preloadRoute(link.path)}
                                     >
                                         <span className="w-0 group-hover:w-2 h-0.5 bg-indigo-400 transition-all duration-300 mr-0 group-hover:mr-2"></span>
                                         {link.name}

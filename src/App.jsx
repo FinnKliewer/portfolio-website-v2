@@ -1,31 +1,29 @@
-import React from "react";
+import React, { Suspense, useEffect } from "react";
+import { domAnimation, LazyMotion } from "framer-motion";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import ProfessionalHistory from "./pages/ProfessionalHistory";
-import GitHubProjects from "./pages/GitHubProjects";
-import Contact from "./pages/Contact";
 import Footer from "./components/Footer";
-import NotFound from "./pages/404NotFound";
+import { pageRoutes, scheduleIdleRoutePreload } from "./routes";
 
 function App() {
-
+    useEffect(() => scheduleIdleRoutePreload(), []);
 
     return (
-        <Router>
-            <div  className={"bg-base-200"}>
-                <Navbar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/professional-history" element={<ProfessionalHistory />} />
-                    <Route path="/github-projects" element={<GitHubProjects />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-                <Footer />
-            </div>
-        </Router>
+        <LazyMotion features={domAnimation} strict>
+            <Router>
+                <div className={"bg-base-200"}>
+                    <Navbar />
+                    <Suspense fallback={<main aria-label="Loading page" style={{ minHeight: "100vh" }} />}>
+                        <Routes>
+                            {pageRoutes.map(({ path, Component }) => (
+                                <Route key={path} path={path} element={<Component />} />
+                            ))}
+                        </Routes>
+                    </Suspense>
+                    <Footer />
+                </div>
+            </Router>
+        </LazyMotion>
     );
 }
 

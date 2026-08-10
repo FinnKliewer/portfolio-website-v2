@@ -1,13 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
-import { Helmet } from "react-helmet";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import ProjectsHero from "../components/projects/ProjectsHero";
 import AllProjectsSection from "../components/projects/AllProjectsSection";
 import EarlyTraceSlide from "../components/SpotlightProjectSlides/EarlyTraceSlide";
 import MandelbrotSlide from "../components/SpotlightProjectSlides/MandelbrotSlide";
+import { useDocumentMetadata } from "../hooks/useDocumentMetadata";
+import { useRepositoryProjects } from "../hooks/useRepositoryProjects";
 
 const CarouselArrow = ({ className, direction, onClick }) => {
     const Icon = direction === 'previous' ? FaChevronLeft : FaChevronRight;
@@ -58,55 +61,20 @@ const carouselSettings = {
 };
 
 function GitHubProjects() {
-    const [repoProjects, setRepoProjects] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasLoadError, setHasLoadError] = useState(false);
+    const {
+        projects: repoProjects,
+        isLoading,
+        hasError: hasLoadError,
+        retry: loadProjects,
+    } = useRepositoryProjects();
 
-    const loadProjects = useCallback(() => {
-        const configuredApiUrl = process.env.REACT_APP_API_URL; // eslint-disable-line no-undef
-        const baseUrl = configuredApiUrl
-            ? configuredApiUrl.replace(/\/$/, "")
-            : "";
-
-        setIsLoading(true);
-        setHasLoadError(false);
-
-        fetch(`${baseUrl}/api/repos`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (!Array.isArray(data)) {
-                    throw new Error('Repository response was not an array.');
-                }
-
-                setRepoProjects(data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching repo data:', error);
-                setHasLoadError(true);
-                setIsLoading(false);
-            });
-    }, []);
-
-    useEffect(() => {
-        loadProjects();
-    }, [loadProjects]);
+    useDocumentMetadata({
+        title: "Selected Work · Finn Kliewer",
+        description: "Selected software projects and technical experiments by Finn Kliewer.",
+    });
 
     return (
         <React.Fragment>
-            <Helmet>
-                <title>Selected Work · Finn Kliewer</title>
-                <meta
-                    name="description"
-                    content="Selected software projects and technical experiments by Finn Kliewer."
-                />
-            </Helmet>
-
             <main className="projects-page">
                 <div className="projects-page__hero-shell">
                     <ProjectsHero />

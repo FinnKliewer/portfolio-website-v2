@@ -1,6 +1,7 @@
 // src/components/icons/ForkIcon.js
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function ForkIcon({
     className
@@ -19,5 +20,9 @@ function ForkIcon({
         </svg>
     );
 }
+
+ForkIcon.propTypes = {
+    className: PropTypes.string,
+};
 
 export default ForkIcon;

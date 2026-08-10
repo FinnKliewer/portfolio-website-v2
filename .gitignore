@@ -25,3 +25,12 @@ yarn-error.log*
 /public/repoData.json
 /server/repoData.json
 /server/src/repoData.json
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/portfolio-website-v2.iml
+/.idea/vcs.xml
+/tmp/
+/.impeccable/

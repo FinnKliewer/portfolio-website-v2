@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import LandingScrollCue from "../LandingScrollCue";
 
 const ProfessionalHero = () => {
@@ -11,15 +11,15 @@ const ProfessionalHero = () => {
 
     return (
         <header className="experience-hero">
-            <motion.h1
+            <m.h1
                 initial={reduceMotion ? false : { y: 28, opacity: 0, filter: "blur(7px)" }}
                 animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
                 transition={{ ...transition, delay: reduceMotion ? 0 : 0.08 }}
             >
                 Experience.
-            </motion.h1>
+            </m.h1>
 
-            <motion.div
+            <m.div
                 className="experience-hero__support landing-hero-support"
                 initial={reduceMotion ? false : { y: 24, opacity: 0, filter: "blur(6px)" }}
                 animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
@@ -40,9 +40,9 @@ const ProfessionalHero = () => {
                         <strong>Reliability under pressure</strong>
                     </div>
                 </div>
-            </motion.div>
+            </m.div>
 
-            <motion.span
+            <m.span
                 className="experience-hero__rule"
                 aria-hidden="true"
                 initial={reduceMotion ? false : { scaleX: 0 }}

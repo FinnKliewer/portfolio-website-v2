@@ -60,7 +60,10 @@ const MandelbrotSlide = () => {
                         src={mandelbrotImage}
                         alt="A colorful high-precision rendering of the Mandelbrot set"
                         className="h-full w-full object-cover object-center lg:absolute lg:inset-0"
+                        width="583"
+                        height="790"
                         loading="lazy"
+                        decoding="async"
                     />
                 </figure>
             </div>

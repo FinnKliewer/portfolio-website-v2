@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import LoadingState from './LoadingState';
 
@@ -21,7 +21,7 @@ const AllProjectsSection = ({ projects, isLoading, hasError, onRetry }) => {
     return (
         <section className="repository-index" aria-labelledby="repository-index-title">
             <div className="repository-index__inner">
-                <motion.header
+                <m.header
                     className="repository-index__header"
                     initial={entrance}
                     whileInView={settled}
@@ -39,12 +39,12 @@ const AllProjectsSection = ({ projects, isLoading, hasError, onRetry }) => {
                             {projects.length} public {projects.length === 1 ? 'repository' : 'repositories'}
                         </span>
                     )}
-                </motion.header>
+                </m.header>
 
                 {isLoading && <LoadingState />}
 
                 {!isLoading && !hasError && projects.length > 0 && (
-                    <motion.div
+                    <m.div
                         className="repository-grid"
                         role="list"
                         aria-label="Public repositories"
@@ -60,11 +60,11 @@ const AllProjectsSection = ({ projects, isLoading, hasError, onRetry }) => {
                                 index={index}
                             />
                         ))}
-                    </motion.div>
+                    </m.div>
                 )}
 
                 {!isLoading && hasError && (
-                    <motion.div
+                    <m.div
                         className="repository-empty repository-empty--error"
                         role="alert"
                         initial={entrance}
@@ -79,11 +79,11 @@ const AllProjectsSection = ({ projects, isLoading, hasError, onRetry }) => {
                         <button type="button" className="site-action site-action--quiet" onClick={onRetry}>
                             Try again
                         </button>
-                    </motion.div>
+                    </m.div>
                 )}
 
                 {!isLoading && !hasError && projects.length === 0 && (
-                    <motion.div
+                    <m.div
                         className="repository-empty"
                         initial={entrance}
                         whileInView={settled}
@@ -95,7 +95,7 @@ const AllProjectsSection = ({ projects, isLoading, hasError, onRetry }) => {
                             <h3>No public repositories found.</h3>
                             <p>The featured case studies above remain available.</p>
                         </div>
-                    </motion.div>
+                    </m.div>
                 )}
             </div>
         </section>

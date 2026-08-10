@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { m, useInView, useReducedMotion } from "framer-motion";
 
 const TimelineCard = ({ job, index, isActive, onActive }) => {
     const entryRef = useRef(null);
@@ -26,7 +26,7 @@ const TimelineCard = ({ job, index, isActive, onActive }) => {
     }, [index, isInView, onActive]);
 
     return (
-        <motion.li
+        <m.li
             ref={entryRef}
             className={`experience-entry ${isActive ? "is-active" : ""}`}
             animate={reduceMotion ? undefined : {
@@ -48,7 +48,7 @@ const TimelineCard = ({ job, index, isActive, onActive }) => {
                 <div className="experience-entry__company">
                     <span className="experience-entry__logo">
                         {job.logo && !logoFailed
-                            ? <img src={job.logo} alt="" loading="lazy" onError={() => setLogoFailed(true)} />
+                            ? <img src={job.logo} alt="" loading="lazy" decoding="async" onError={() => setLogoFailed(true)} />
                             : <span className="experience-entry__monogram" aria-hidden="true">{monogram}</span>}
                     </span>
                     <span>{job.company}</span>
@@ -58,13 +58,13 @@ const TimelineCard = ({ job, index, isActive, onActive }) => {
                 <p>{job.description}</p>
 
                 <div className="experience-entry__divider" aria-hidden="true">
-                    <motion.span
+                    <m.span
                         animate={reduceMotion ? undefined : { scaleX: isActive ? 1 : 0 }}
                         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                     />
                 </div>
             </div>
-        </motion.li>
+        </m.li>
     );
 };
 
@@ -81,4 +81,4 @@ TimelineCard.propTypes = {
     onActive: PropTypes.func.isRequired,
 };
 
-export default TimelineCard;
+export default React.memo(TimelineCard);

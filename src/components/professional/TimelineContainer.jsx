@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import TimelineCard from "./TimelineCard";
 
 const TimelineContainer = ({ jobs }) => {
@@ -38,7 +38,7 @@ const TimelineContainer = ({ jobs }) => {
                     </div>
 
                     <AnimatePresence mode="wait" initial={false}>
-                        <motion.div
+                        <m.div
                             className="experience-overview__active"
                             key={`${activeJob.company}-${activeJob.title}`}
                             initial={reduceMotion ? false : { y: 18, opacity: 0, filter: "blur(6px)" }}
@@ -49,7 +49,7 @@ const TimelineContainer = ({ jobs }) => {
                             <span>{activeJob.company}</span>
                             <strong>{activeJob.title}</strong>
                             <p>{activeJob.description}</p>
-                        </motion.div>
+                        </m.div>
                     </AnimatePresence>
 
                     <div className="experience-overview__footer">
@@ -67,7 +67,7 @@ const TimelineContainer = ({ jobs }) => {
 
             <div className="experience-route__timeline">
                 <div className="experience-route__spine" aria-hidden="true">
-                    <motion.span style={{ scaleY: reduceMotion ? 1 : timelineProgress }} />
+                    <m.span style={{ scaleY: reduceMotion ? 1 : timelineProgress }} />
                 </div>
 
                 <ol className="experience-list">
