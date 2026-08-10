@@ -25,7 +25,7 @@ export const preloadRepositoryProjects = ({ force = false } = {}) => {
     if (activeRequest) return activeRequest;
     if (hasAttempted && !force) return Promise.resolve(snapshot.projects);
 
-    const configuredApiUrl = process.env.REACT_APP_API_URL; // eslint-disable-line no-undef
+    const configuredApiUrl = import.meta.env.VITE_API_URL || import.meta.env.REACT_APP_API_URL;
     const baseUrl = configuredApiUrl ? configuredApiUrl.replace(/\/$/, "") : "";
 
     setSnapshot({

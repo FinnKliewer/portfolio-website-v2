@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import siteContent from "../content/siteContent";
-import { ReactComponent as EmailIcon } from "../assets/icons/email.svg";
-import { ReactComponent as PhoneIcon } from "../assets/icons/phone-call.svg";
+import EmailIcon from "../assets/icons/email.svg?react";
+import PhoneIcon from "../assets/icons/phone-call.svg?react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { preloadRoute } from "../routes";
 

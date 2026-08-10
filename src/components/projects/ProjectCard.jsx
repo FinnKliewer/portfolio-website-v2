@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
 import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
-import { ReactComponent as GitStar } from '../../assets/icons/git-star.svg';
-import { ReactComponent as GitFork } from '../../assets/icons/git-fork.svg';
+import GitStar from '../../assets/icons/git-star.svg?react';
+import GitFork from '../../assets/icons/git-fork.svg?react';
 
 const ProjectCard = ({ project, index }) => {
     const cardVariants = {

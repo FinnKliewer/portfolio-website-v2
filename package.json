@@ -2,9 +2,8 @@
   "name": "personal_website_v2",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
   "dependencies": {
-    "axios": "^1.7.7",
+    "axios": "^1.19.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "framer-motion": "^12.4.7",
@@ -14,26 +13,20 @@
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
     "react-katex": "^3.0.1",
-    "react-router-dom": "^6.26.2",
-    "react-scripts": "5.0.1",
+    "react-router-dom": "^7.18.2",
     "react-slick": "^0.30.3",
     "slick-carousel": "^1.8.1",
-    "three": "0.121.1",
+    "three": "0.125.2",
     "vanta": "^0.5.24"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run --passWithNoTests",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -49,11 +42,19 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
-    "@svgr/webpack": "^8.1.0",
+    "@vitejs/plugin-react": "^6.0.5",
+    "autoprefixer": "^10.5.4",
     "daisyui": "^4.12.23",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.4",
     "globals": "^16.0.0",
-    "tailwindcss": "^3.4.12"
+    "postcss": "^8.5.26",
+    "tailwindcss": "^3.4.12",
+    "vite": "^8.2.1",
+    "vite-plugin-svgr": "^5.2.0",
+    "vitest": "^4.1.10"
+  },
+  "allowScripts": {
+    "fsevents": false
   }
 }

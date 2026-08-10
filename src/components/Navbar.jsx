@@ -3,8 +3,8 @@ import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import siteContent from "../content/siteContent";
 import { ThemeContext } from "../context/ThemeContext";
-import { ReactComponent as DarkThemeIcon } from "../assets/icons/dark-theme.svg";
-import { ReactComponent as LightThemeIcon } from "../assets/icons/light-theme.svg";
+import DarkThemeIcon from "../assets/icons/dark-theme.svg?react";
+import LightThemeIcon from "../assets/icons/light-theme.svg?react";
 import { preloadRoute } from "../routes";
 
 function RouteMark() {

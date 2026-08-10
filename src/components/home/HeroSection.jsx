@@ -71,7 +71,7 @@ const HeroSection = () => {
                         height="867"
                         loading="eager"
                         decoding="async"
-                        fetchPriority="high"
+                        fetchpriority="high"
                     />
                     <div className="identity-module__scan" aria-hidden="true" />
                 </div>

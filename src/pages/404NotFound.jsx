@@ -1,6 +1,6 @@
 import { m } from "framer-motion";
 import React from 'react';
-import {ReactComponent as Astronaut } from "../assets/icons/astronaut.svg";
+import Astronaut from "../assets/icons/astronaut.svg?react";
 import { useDocumentMetadata } from "../hooks/useDocumentMetadata";
 
 

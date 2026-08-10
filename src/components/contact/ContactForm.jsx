@@ -52,7 +52,10 @@ const ContactForm = () => {
             setSubmissionStatus('submitting');
 
             try {
-                const webhookUrl = process.env.REACT_APP_WEBHOOK_LINK; // eslint-disable-line no-undef
+                const webhookUrl = (
+                    import.meta.env.VITE_WEBHOOK_LINK
+                    || import.meta.env.REACT_APP_WEBHOOK_LINK
+                );
 
                 if (!webhookUrl) {
                     throw new Error('Contact webhook is not configured.');
