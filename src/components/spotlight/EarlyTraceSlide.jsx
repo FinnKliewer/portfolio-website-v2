@@ -1,6 +1,6 @@
 import React from 'react';
 import Trophy from '../../assets/icons/trophy.svg?react';
-import ClassificationFlow from "../ClassificationFlow";
+import ClassificationFlow from "./ClassificationFlow";
 import SpotlightCard from "./SpotlightCard";
 
 const GithubIcon = () => (

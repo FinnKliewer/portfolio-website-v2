@@ -24,6 +24,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "server": "node server/src/server.js",
+    "refresh:repos": "node server/src/fetchGitHubData.js",
     "test": "vitest run --passWithNoTests",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix"

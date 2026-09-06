@@ -7,8 +7,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 import ProjectsHero from "../components/projects/ProjectsHero";
 import AllProjectsSection from "../components/projects/AllProjectsSection";
-import EarlyTraceSlide from "../components/SpotlightProjectSlides/EarlyTraceSlide";
-import MandelbrotSlide from "../components/SpotlightProjectSlides/MandelbrotSlide";
+import EarlyTraceSlide from "../components/spotlight/EarlyTraceSlide";
+import MandelbrotSlide from "../components/spotlight/MandelbrotSlide";
 import { useDocumentMetadata } from "../hooks/useDocumentMetadata";
 import { useRepositoryProjects } from "../hooks/useRepositoryProjects";
 

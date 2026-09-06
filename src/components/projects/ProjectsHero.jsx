@@ -1,6 +1,6 @@
 import React from 'react';
 import { m, useReducedMotion } from 'framer-motion';
-import LandingScrollCue from '../LandingScrollCue';
+import LandingScrollCue from '../shared/LandingScrollCue';
 
 const ProjectsHero = () => {
     const reduceMotion = useReducedMotion();

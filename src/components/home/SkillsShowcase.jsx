@@ -3,7 +3,7 @@ import { m, useReducedMotion } from "framer-motion";
 import siteContent from "../../content/siteContent";
 
 const SkillsShowcase = () => {
-    const { home, education } = siteContent;
+    const { home, education, educationStatement } = siteContent;
     const reduceMotion = useReducedMotion();
 
     return (
@@ -37,10 +37,13 @@ const SkillsShowcase = () => {
                 </div>
             </m.div>
 
-            <div className="education-rail">
-                <p>Technical depth, broader judgment.</p>
-                <div>{education.map((item) => <span key={item}>{item}</span>)}</div>
-            </div>
+            <section className="education-rail" aria-labelledby="education-heading">
+                <div>
+                    <h2 id="education-heading">Education</h2>
+                    <p>{educationStatement}</p>
+                </div>
+                <ul>{education.map((item) => <li key={item}>{item}</li>)}</ul>
+            </section>
         </section>
     );
 };

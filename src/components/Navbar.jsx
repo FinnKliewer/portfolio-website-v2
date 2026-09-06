@@ -7,14 +7,9 @@ import DarkThemeIcon from "../assets/icons/dark-theme.svg?react";
 import LightThemeIcon from "../assets/icons/light-theme.svg?react";
 import { preloadRoute } from "../routes";
 
-function RouteMark() {
+function BrandMark() {
     return (
-        <svg className="site-route-mark" viewBox="0 0 54 18" aria-hidden="true">
-            <path d="M2 9h17l6-6h12l6 6h9" />
-            <circle cx="2" cy="9" r="2" />
-            <circle cx="25" cy="3" r="2" />
-            <circle cx="52" cy="9" r="2" />
-        </svg>
+        <span className="site-route-mark site-brand__favicon" aria-hidden="true" />
     );
 }
 
@@ -68,7 +63,7 @@ function Navbar() {
         <nav className={`site-nav ${isScrolled || isMobileMenuOpen ? "site-nav--active" : ""}`} aria-label="Primary navigation">
             <div className="site-nav__inner">
                 <Link to="/" className="site-brand" aria-label="Finn Kliewer, home">
-                    <RouteMark />
+                    <BrandMark />
                     <span>{brand}</span>
                 </Link>
 
@@ -128,7 +123,7 @@ function Navbar() {
                         exit={reduceMotion ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
                         transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="mobile-nav__route" aria-hidden="true"><RouteMark /></div>
+                        <div className="mobile-nav__route" aria-hidden="true"><BrandMark /></div>
                         <div className="mobile-nav__links">
                             {links.map((link, index) => (
                                 <NavLink

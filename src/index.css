@@ -11,59 +11,6 @@
     }
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
-@keyframes glow {
-    0%, 100% {
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
-    }
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        opacity: 0.6;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-}
-
-.animate-shimmer {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 2s ease-in-out infinite;
-    -moz-animation: shimmer 2s ease-in-out infinite;
-    -webkit-animation: shimmer 2s ease-in-out infinite;
-}
-
-.animate-float {
-    animation: float 6s ease-in-out infinite;
-}
-
-.animate-glow {
-    animation: glow 3s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.fade-edges {
-    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-}
-
 .selected-work-carousel .slick-list {
     margin-inline: clamp(-0.75rem, -0.75vw, -0.375rem);
     background: transparent;
@@ -668,6 +615,18 @@ textarea:focus-visible {
     stroke-width: 1.35;
 }
 
+.site-brand__favicon {
+    display: inline-block;
+    width: 2.35rem;
+    height: 2.3rem;
+    aspect-ratio: 128 / 125;
+    flex: 0 0 auto;
+    background: var(--site-accent);
+    mask: url("/favicon.ico") center / contain no-repeat;
+    -webkit-mask: url("/favicon.ico") center / contain no-repeat;
+    transition: background-color 180ms ease;
+}
+
 .site-nav__links {
     display: flex;
     height: 100%;
@@ -793,6 +752,10 @@ textarea:focus-visible {
 
 .mobile-nav__route .site-route-mark {
     width: 100%;
+}
+
+.mobile-nav__route .site-brand__favicon {
+    width: 2.35rem;
 }
 
 .mobile-nav__links {
@@ -1246,15 +1209,28 @@ textarea:focus-visible {
     content: '';
 }
 
-.education-rail p {
+.education-rail h2 {
     margin: 0;
+    font-size: 1rem;
     font-weight: 600;
 }
 
-.education-rail div {
+.education-rail p {
+    margin: 0;
+    margin-top: 0.3rem;
+    max-width: 48rem;
+    color: var(--site-muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.education-rail ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     gap: 0.55rem 1.5rem;
     color: var(--site-muted);
     font-size: 0.82rem;
@@ -3751,7 +3727,7 @@ textarea:focus-visible {
         flex-direction: column;
     }
 
-    .education-rail div {
+    .education-rail ul {
         justify-content: flex-start;
     }
 

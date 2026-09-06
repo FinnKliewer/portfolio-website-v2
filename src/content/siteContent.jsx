@@ -3,13 +3,11 @@ const siteContent = {
     gitHubLink: "https://github.com/OX-S",
     linkedinLink: "https://www.linkedin.com/in/finnkliewer/",
     home: {
-        heading: "I build the systems behind high-stakes work.",
         subheading:
             "Software engineer by training. I work across platforms, infrastructure, and markets.",
         description:
             "I build reliable systems and developer tooling for environments where speed, precision, and technical judgment matter.",
         currentRole: "Platform Engineer · Citadel",
-        previousRole: "Previously Software Engineer · Paycom",
         focusAreas: [
             {
                 title: "Engineering leverage",
@@ -24,12 +22,14 @@ const siteContent = {
                 description: "A systems view shaped by computer science, markets, and business context.",
             },
         ],
-        resumeLink: "/resume.pdf",
+        resumeLink: "/Finn_Kliewer_Resume.pdf",
     },
     education: [
-        "B.S. Computer Science · Rutgers University",
-        "M.S. Business Analytics · Cornell University",
+        "B.S. in Computer Science · Rutgers University",
+        "M.S. in Business Analytics · Cornell University",
     ],
+    educationStatement:
+        "Finn Kliewer earned a B.S. in Computer Science from Rutgers University and an M.S. in Business Analytics from Cornell University.",
     navbar: {
         brand: "Finn Kliewer",
         links: [
