@@ -1,53 +1,122 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import siteContent from "../content/siteContent";
-import { ReactComponent as EmailIcon } from "../assets/icons/email.svg";
-import { ReactComponent as PhoneIcon } from "../assets/icons/phone-call.svg";
+import EmailIcon from "../assets/icons/email.svg?react";
+import PhoneIcon from "../assets/icons/phone-call.svg?react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { preloadRoute } from "../routes";
 
 function Footer() {
     return (
-        <footer className="bg-base-300">
-            <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                    <div className="mb-6 md:mb-0">
-                        <h2 className="text-2xl font-bold">{siteContent.navbar.brand}</h2>
-                    </div>
-                    <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 hide-below-460">
-                        {siteContent.navbar.links.map((link) => (
+        <footer className="relative overflow-hidden">
+            {/* Background Gradient */}
+            <div className="absolute inset-0 bg-gray-950"></div>
+            
+            {/* Decorative Elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-full blur-xl"></div>
+                <div className="absolute bottom-10 right-10 w-24 h-24 bg-gradient-to-r from-pink-500/10 to-red-500/10 rounded-full blur-xl"></div>
+                <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-xl"></div>
+            </div>
+
+            <div className="relative z-10 max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+                {/* Main Footer Content */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                    {/* Brand Section */}
+                    <div className="lg:col-span-2">
+                        <div className="mb-6">
+                                <h2 className="text-3xl font-semibold text-white mb-4 tracking-[-0.03em]">
+                                {siteContent.navbar.brand}
+                            </h2>
+                            <p className="text-gray-300 leading-relaxed max-w-md">
+                                Platform Engineer at Citadel building the software systems and engineering leverage behind high-stakes work.
+                            </p>
+                        </div>
+                        
+                        {/* Social Links */}
+                        <div className="flex space-x-4">
                             <a
-                                key={link.name}
-                                href={link.path}
-                                className="hover:text-white transition-colors duration-300"
-                                aria-label={link.name}
+                                href={siteContent.gitHubLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group p-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/20 transition-all duration-300 transform hover:scale-110"
+                                aria-label="GitHub Profile"
                             >
-                                {link.name}
+                                <FaGithub className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors duration-300" />
                             </a>
-                        ))}
+                            <a
+                                href={siteContent.linkedinLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group p-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/20 transition-all duration-300 transform hover:scale-110"
+                                aria-label="LinkedIn Profile"
+                            >
+                                <FaLinkedin className="w-5 h-5 text-gray-300 group-hover:text-blue-400 transition-colors duration-300" />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Quick Links */}
+                    <div>
+                        <h3 className="text-lg font-bold text-white mb-4">Explore</h3>
+                        <ul className="space-y-3">
+                            {siteContent.navbar.links.map((link) => (
+                                <li key={link.name}>
+                                    <Link
+                                        to={link.path}
+                                        className="text-gray-300 hover:text-indigo-400 transition-colors duration-300 flex items-center group"
+                                        onPointerEnter={() => preloadRoute(link.path)}
+                                        onFocus={() => preloadRoute(link.path)}
+                                        onTouchStart={() => preloadRoute(link.path)}
+                                    >
+                                        <span className="w-0 group-hover:w-2 h-0.5 bg-indigo-400 transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Contact Info */}
+                    <div>
+                        <h3 className="text-lg font-bold text-white mb-4">Get in Touch</h3>
+                        <div className="space-y-4">
+                            <a
+                                href="mailto:finn.kliewer@gmail.com"
+                                className="group flex items-center text-gray-300 hover:text-indigo-400 transition-colors duration-300"
+                                aria-label="Email"
+                            >
+                                <div className="p-2 bg-white/10 rounded-lg mr-3 group-hover:bg-indigo-500/20 transition-colors duration-300">
+                                    <EmailIcon className="h-4 w-4" />
+                                </div>
+                                <span className="text-sm">finn.kliewer@gmail.com</span>
+                            </a>
+                            <a
+                                href="tel:+12017472660"
+                                className="group flex items-center text-gray-300 hover:text-indigo-400 transition-colors duration-300"
+                                aria-label="Phone"
+                            >
+                                <div className="p-2 bg-white/10 rounded-lg mr-3 group-hover:bg-indigo-500/20 transition-colors duration-300">
+                                    <PhoneIcon className="h-4 w-4" />
+                                </div>
+                                <span className="text-sm">+1 (201) 747-2660</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <div className="mt-8 border-t border-gray-700 pt-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                    <div className="flex flex-wrap justify-center md:justify-start gap-x-4 gap-y-2 mb-4 md:mb-0">
-                        <a
-                            href="mailto:finn.kliewer@gmail.com"
-                            className="hover:text-white transition-colors duration-300 flex items-center"
-                            aria-label="Email"
-                        >
-                            <EmailIcon className="h-6 w-6 mr-2" />
-                            finn.kliewer@gmail.com
-                        </a>
-                        <a
-                            href="tel:+12017472660"
-                            className="hover:text-white transition-colors duration-300 flex items-center"
-                            aria-label="Phone"
-                        >
-                            <PhoneIcon className="mr-2 h-6 w-6" />
-                            +1 (201) 747-2660
-                        </a>
+                {/* Bottom Section */}
+                <div className="border-t border-gray-700/50 pt-8">
+                    <div className="flex justify-center md:justify-start">
+                        <div className="text-gray-400 text-sm">
+                            &copy; {new Date().getFullYear()} Finn Kliewer. All rights reserved.
+                        </div>
                     </div>
+                </div>
 
-                    <div className="text-sm text-gray-400">
-                        &copy; {new Date().getFullYear()} Finn Kliewer. All rights reserved.
-                    </div>
+                {/* Decorative Line */}
+                <div className="flex justify-center mt-8">
+                    <div className="w-24 h-px bg-indigo-400"></div>
                 </div>
             </div>
         </footer>

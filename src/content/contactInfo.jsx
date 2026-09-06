@@ -1,5 +1,6 @@
 // src/content/contactInfo.js
 
+import React from "react";
 import { FaEnvelope, FaPhone, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const contactInfo = [

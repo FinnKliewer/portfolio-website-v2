@@ -2,6 +2,9 @@
 require('dotenv').config();
 const axios = require('axios');
 const fs = require('fs');
+const path = require('path');
+
+const repoDataPath = path.join(__dirname, 'repoData.json');
 
 const repoUrls = [
     'https://github.com/FinnKliewer/early-trace',
@@ -70,7 +73,7 @@ async function fetchData() {
         }
     }
 
-    fs.writeFileSync('repoData.json', JSON.stringify(repoDataList, null, 2));
+    fs.writeFileSync(repoDataPath, JSON.stringify(repoDataList, null, 2));
     console.log('Data saved to repoData.json');
 }
 

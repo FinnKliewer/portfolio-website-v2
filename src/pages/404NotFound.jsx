@@ -1,25 +1,23 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import React from 'react';
-import {ReactComponent as Astronaut } from "../assets/icons/astronaut.svg";
-import {Helmet} from "react-helmet";
+import Astronaut from "../assets/icons/astronaut.svg?react";
+import { useDocumentMetadata } from "../hooks/useDocumentMetadata";
 
 
 function NotFound() {
+    useDocumentMetadata({ title: "404 - Finn Kliewer" });
+
     return (
-        <>
-            <Helmet>
-                <title>404 - Finn Kliewer</title>
-            </Helmet>
-            <div
-                className="h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
-                <motion.div
+        <div
+            className="h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
+                <m.div
                     className="absolute top-20 w-32 md:w-48"
                     initial={{y: -10}}
                     animate={{y: 10}}
                     transition={{repeat: Infinity, repeatType: "reverse", duration: 2}}
                 >
                     <Astronaut className="w-full h-full fill-current"/>
-                </motion.div>
+                </m.div>
 
                 <h1 className="text-7xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
                     404
@@ -39,8 +37,7 @@ function NotFound() {
                     Take Me Home
                 </button>
 
-            </div>
-        </>
+        </div>
     );
 }
 

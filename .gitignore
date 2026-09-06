@@ -25,3 +25,6 @@ yarn-error.log*
 /public/repoData.json
 /server/repoData.json
 /server/src/repoData.json
+/.idea/
+/tmp/
+/.impeccable/
